@@ -326,4 +326,27 @@ class LightServiceTest {
 
     }
 
+    @Test
+    void deleteLight() throws Exception {
+        Light light1 = new Light("Light LR 1", DeviceManufacturer.XIAOMI);
+        Light light2 = new Light("Light LR 2", DeviceManufacturer.XIAOMI);
+        Light light3 = new Light("Light LR 3", DeviceManufacturer.XIAOMI);
+        Light light4 = new Light("Light LR 4", DeviceManufacturer.XIAOMI);
+
+        String name = light1.getName();
+        repo.saveAll(List.of(light1, light2, light3, light4));
+
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/light/{name}/", name )
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        assertThat(repo.findAll()).doesNotContain(light1);
+    }
+
+
+
+
+
 }

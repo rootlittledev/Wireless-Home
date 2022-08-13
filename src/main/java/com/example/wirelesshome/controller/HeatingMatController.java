@@ -2,6 +2,7 @@ package com.example.wirelesshome.controller;
 
 import com.example.wirelesshome.model.device.light.Light;
 import com.example.wirelesshome.model.device.mat.HeatingMat;
+import com.example.wirelesshome.model.device.mat.HeatingMatStateRequest;
 import com.example.wirelesshome.service.HeatingMatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -41,4 +42,20 @@ public class HeatingMatController {
 
         return service.save(heatingMat);
     }
+
+    @PutMapping("/{name}/")
+    public HeatingMat updateHeatingMat(@PathVariable String name, @RequestBody HeatingMatStateRequest state){
+        log.info("Update mat {}, with state {}", name, state);
+
+        return service.update(name, state);
+
+    }
+
+    @DeleteMapping("/{name}")
+    public void deleteHeatingMat(@PathVariable String name) {
+        log.info("Delete heating mat {}", name);
+
+        service.delete(name);
+    }
+
 }

@@ -58,4 +58,13 @@ public class LightController {
         return service.update(name, state);
     }
 
+    @DeleteMapping("/{name}")
+    public void deleteLight(@PathVariable String name) {
+        log.info("Delete light {}", name);
+
+         service.delete(name);
+    }
+
+
+
 }

@@ -10,6 +10,7 @@ import com.example.wirelesshome.repository.LightRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,6 +39,7 @@ public class LightService {
         return repo.findByName(name)
                 .orElseThrow(() -> new LightNotFound(name));
     }
+
     public Light update(String name, LightStateRequest lightState) {
         Light light = getLight(name);
         DeviceState state = lightState.getState();
@@ -76,4 +78,7 @@ public class LightService {
         return repo.save(light);
     }
 
+    public void delete(String name) {
+         repo.deleteById(name);
+    }
 }

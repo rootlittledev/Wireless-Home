@@ -2,6 +2,10 @@ package com.example.wirelesshome.model.device.mat;
 
 import com.example.wirelesshome.model.device.DeviceManufacturer;
 import com.example.wirelesshome.model.device.DeviceState;
+import com.example.wirelesshome.util.LocalDateTimeDeserializer;
+import com.example.wirelesshome.util.LocalDateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -26,6 +30,8 @@ public class HeatingMat {
 
     private Long temperature = 0L;
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime shutOff = LocalDateTime.now();
 
     public HeatingMat(String name, DeviceManufacturer manufacturer) {
