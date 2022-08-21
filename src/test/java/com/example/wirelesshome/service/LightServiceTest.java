@@ -94,7 +94,8 @@ class LightServiceTest {
 
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/light/" + name).contentType(MediaType.APPLICATION_JSON))
+                                .get("/api/light/" + name)
+                                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
     }

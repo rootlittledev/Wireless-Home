@@ -1,6 +1,5 @@
 package com.example.wirelesshome.controller;
 
-import com.example.wirelesshome.model.device.light.Light;
 import com.example.wirelesshome.model.device.mat.HeatingMat;
 import com.example.wirelesshome.model.device.mat.HeatingMatStateRequest;
 import com.example.wirelesshome.service.HeatingMatService;
@@ -43,12 +42,19 @@ public class HeatingMatController {
         return service.save(heatingMat);
     }
 
-    @PutMapping("/{name}/")
-    public HeatingMat updateHeatingMat(@PathVariable String name, @RequestBody HeatingMatStateRequest state){
+    @PutMapping("/{name}")
+    public HeatingMat updateHeatingMat(@PathVariable String name, @RequestBody HeatingMatStateRequest state) {
         log.info("Update mat {}, with state {}", name, state);
 
         return service.update(name, state);
 
+    }
+
+    @PutMapping("/disable")
+    public void disableMat(@RequestBody String name) {
+        log.info("Timer run out, disabling mat: {}", name);
+
+        service.disable(name);
     }
 
     @DeleteMapping("/{name}")

@@ -29,9 +29,8 @@ public class HeatingMatService {
         return repo.findAll();
     }
 
-    public HeatingMat save(HeatingMat HeatingMat) {
-        
-        return repo.save(HeatingMat);
+    public HeatingMat save(HeatingMat heatingMat) {
+        return repo.save(heatingMat);
     }
 
     public HeatingMat getHeatingMat(String name) {
@@ -67,11 +66,8 @@ public class HeatingMatService {
         }
 
         LocalDateTime shutOff = schedulerService.schedule(name, "mat", heatingMatState.getTimer());
-        if (shutOff != null ) {
-           log.debug("");
 
-            heatingMat.setShutOff(shutOff);
-        }
+        heatingMat.setShutOff(shutOff);
 
         return repo.save(heatingMat);
     }
@@ -80,18 +76,13 @@ public class HeatingMatService {
         repo.deleteById(name);
     }
 
-//    //Todo autowire scheduling service
-//    //Todo add parameters for scheduling
-//    @Autowired
-//    public SchedulerService service;
-//
-//    private LocalDateTime schedule() {
-//        //Todo schedule using schedule service
-//        //Todo return timer expiration time
-//
-//    }
-//
-//
-////    Todo update
+    public void disable(String name) {
+        HeatingMat heatingMat = getHeatingMat(name);
+        heatingMat.setShutOff(null);
+        heatingMat.setState(DeviceState.OFF);
+
+        repo.save(heatingMat);
+
+    }
 
 }
