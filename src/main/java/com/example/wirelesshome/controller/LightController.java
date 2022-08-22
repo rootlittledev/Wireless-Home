@@ -51,7 +51,7 @@ public class LightController {
     }
 
 
-    @PutMapping("/{name}/state")
+    @PutMapping("/{name}")
     public Light updateLight(@PathVariable String name, @RequestBody LightStateRequest state) {
         log.info("Update light {}, with state {}", name, state);
 

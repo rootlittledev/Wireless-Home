@@ -4,3 +4,5 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: password
+scheduler:
+  url: "http://localhost:8070/"

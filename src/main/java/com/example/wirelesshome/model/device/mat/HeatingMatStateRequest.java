@@ -11,5 +11,5 @@ import lombok.*;
 public class HeatingMatStateRequest {
     private Long temperature;
     private DeviceState state;
-    private int timer;
+    private long timer;
 }

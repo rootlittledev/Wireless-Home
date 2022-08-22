@@ -12,5 +12,5 @@ public class ScheduleRequest {
     private String name;
 
     private String type;
-    private int timer;
+    private long timer;
 }

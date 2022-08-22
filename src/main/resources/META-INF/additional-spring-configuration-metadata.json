@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "scheduler.url",
+      "type": "java.lang.String",
+      "description": "URL to scheduler service."
+  }
+] }

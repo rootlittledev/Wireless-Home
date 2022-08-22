@@ -38,6 +38,10 @@ public class HeatingMatService {
                 .orElseThrow(() -> new HeatingMatNotFound(name));
     }
 
+    public HeatingMat update(HeatingMat mat) {
+        return repo.save(mat);
+    }
+
     public HeatingMat update(String name, HeatingMatStateRequest heatingMatState) {
         HeatingMat heatingMat = getHeatingMat(name);
         DeviceState state = heatingMatState.getState();
@@ -54,6 +58,7 @@ public class HeatingMatService {
             heatingMat.setTemperature(20L);
         } else {
             log.debug("Heating Mat Off setting default temperature to 0");
+            schedulerService.cancel(name);
             heatingMat.setTemperature(0L);
         }
 
@@ -65,7 +70,14 @@ public class HeatingMatService {
             log.debug("Heating Mat temperature missing, using default");
         }
 
-        LocalDateTime shutOff = schedulerService.schedule(name, "mat", heatingMatState.getTimer());
+        LocalDateTime shutOff = null;
+
+        if (heatingMatState.getTimer() > 0){
+            shutOff = schedulerService.schedule(name, "mat", heatingMatState.getTimer());
+        } else {
+            schedulerService.cancel(name);
+        }
+
 
         heatingMat.setShutOff(shutOff);
 

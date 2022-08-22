@@ -122,7 +122,7 @@ class LightServiceTest {
 
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put("/api/light/" + name + "/state")
+                                .put("/api/light/" + name)
                                 .content(requestBody)
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
@@ -145,7 +145,7 @@ class LightServiceTest {
 
         mockMvc.perform(
                         MockMvcRequestBuilders
-                                .put("/api/light/" + name + "/state")
+                                .put("/api/light/" + name)
                                 .content(requestBody)
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -169,7 +169,7 @@ class LightServiceTest {
         String requestBody = mapper.writeValueAsString(request);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/light/" + name + "/state")
+                        .put("/api/light/" + name)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -193,7 +193,7 @@ class LightServiceTest {
         String requestBody = mapper.writeValueAsString(request);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/light/" + name + "/state")
+                        .put("/api/light/" + name)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -217,7 +217,7 @@ class LightServiceTest {
         String requestBody = mapper.writeValueAsString(request);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/light/" + name + "/state")
+                        .put("/api/light/" + name)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -242,7 +242,7 @@ class LightServiceTest {
         String requestBody = mapper.writeValueAsString(request);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/light/" + name + "/state")
+                        .put("/api/light/" + name)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -267,7 +267,7 @@ class LightServiceTest {
         String requestBody = mapper.writeValueAsString(request);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/light/" + name + "/state")
+                        .put("/api/light/" + name)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -293,7 +293,7 @@ class LightServiceTest {
         String requestBody = mapper.writeValueAsString(request);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/light/" + name + "/state")
+                        .put("/api/light/" + name)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -319,7 +319,7 @@ class LightServiceTest {
         String requestBody = mapper.writeValueAsString(request);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/api/light/" + name + "/state")
+                        .put("/api/light/" + name)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

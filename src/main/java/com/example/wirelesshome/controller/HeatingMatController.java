@@ -42,6 +42,14 @@ public class HeatingMatController {
         return service.save(heatingMat);
     }
 
+    @PutMapping
+    public HeatingMat update(@RequestBody HeatingMat mat) {
+        log.info("Update map {}, with {}", mat.getName(), mat);
+
+        return service.update(mat);
+
+    }
+
     @PutMapping("/{name}")
     public HeatingMat updateHeatingMat(@PathVariable String name, @RequestBody HeatingMatStateRequest state) {
         log.info("Update mat {}, with state {}", name, state);
