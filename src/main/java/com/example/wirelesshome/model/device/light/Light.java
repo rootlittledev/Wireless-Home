@@ -20,7 +20,6 @@ public class Light {
     private String name;
 
     private DeviceState state = DeviceState.OFF;
-
     private DeviceManufacturer manufacturer;
 
     private Long brightness = 0L;

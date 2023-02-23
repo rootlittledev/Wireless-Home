@@ -3,16 +3,11 @@ logging:
     com.example.wirelesshome: INFO
 spring:
   datasource:
-    url: "jdbc:h2:file:./device"
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
+    url: "jdbc:postgresql://localhost:5432/device"
+    username: sonar
+    password: sonar
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-  h2:
-    console:
-      enabled: true
 scheduler:
   url: "http://localhost:8070/"

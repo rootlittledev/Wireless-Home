@@ -1,16 +1,17 @@
 package com.example.wirelesshome.repository;
 
-import com.example.wirelesshome.model.device.mat.HeatingMat;
+import com.example.wirelesshome.model.house.Floor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface HeatingMatRepo extends CrudRepository<HeatingMat, String> {
+public interface FloorRepo extends CrudRepository<Floor, String> {
+
     @Override
     @NonNull
-    List<HeatingMat> findAll();
+    List<Floor> findAll();
 
-    Optional<HeatingMat> findByName(String name);
+    Optional<Floor> findByName(String name);
 }
