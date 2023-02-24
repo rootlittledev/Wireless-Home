@@ -3,7 +3,7 @@ logging:
     com.example.wirelesshome: INFO
 spring:
   datasource:
-    url: "jdbc:postgresql://localhost:5432/device"
+    url: "jdbc:postgresql://192.168.0.179:5432/device"
     username: sonar
     password: sonar
   jpa:
@@ -11,3 +11,8 @@ spring:
       ddl-auto: update
 scheduler:
   url: "http://localhost:8070/"
+
+connector:
+  ak: ek8g7qjppmt34hapac3p
+  sk: 77dbea5c45a54f03ae8be8a9ceaef8c9
+  region: EU

@@ -1,25 +1,29 @@
 package com.example.wirelesshome.service;
 
+import com.example.wirelesshome.connector.LightConnector;
+import com.example.wirelesshome.exception.CommandFailed;
 import com.example.wirelesshome.exception.DeviceStateMissing;
 import com.example.wirelesshome.exception.LightNotFound;
+import com.example.wirelesshome.model.device.DeviceState;
 import com.example.wirelesshome.model.device.light.Light;
 import com.example.wirelesshome.model.device.light.LightColor;
 import com.example.wirelesshome.model.device.light.LightStateRequest;
-import com.example.wirelesshome.model.device.DeviceState;
 import com.example.wirelesshome.repository.LightRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @Slf4j
 public class LightService {
 
+    private final LightConnector connector;
+
     private final LightRepo repo;
 
-    public LightService(LightRepo repo) {
+    public LightService(LightConnector connector, LightRepo repo) {
+        this.connector = connector;
         this.repo = repo;
     }
 
@@ -36,12 +40,22 @@ public class LightService {
     }
 
     public Light getLight(String name) {
-        return repo.findByName(name)
+        Light light = repo.findById(name)
                 .orElseThrow(() -> new LightNotFound(name));
+
+        LightStateRequest state = connector.getDevice(light);
+
+        light.setBrightness(state.getBrightness());
+        light.setState(state.getState());
+        light.setColor(state.getColor());
+
+        return light;
     }
 
     public Light update(String name, LightStateRequest lightState) {
-        Light light = getLight(name);
+        Light light = repo.findById(name)
+                .orElseThrow(() -> new LightNotFound(name));
+
         DeviceState state = lightState.getState();
         light.setState(state);
 
@@ -75,10 +89,14 @@ public class LightService {
             log.debug("Light color missing, using default");
         }
 
-        return repo.save(light);
+        if (connector.commands(light)) {
+            return repo.save(light);
+        }
+
+        throw new CommandFailed();
     }
 
     public void delete(String name) {
-         repo.deleteById(name);
+        repo.deleteById(name);
     }
 }

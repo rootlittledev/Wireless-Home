@@ -50,7 +50,6 @@ public class LightController {
         return service.update(light);
     }
 
-
     @PutMapping("/{name}")
     public Light updateLight(@PathVariable String name, @RequestBody LightStateRequest state) {
         log.info("Update light {}, with state {}", name, state);
@@ -62,9 +61,6 @@ public class LightController {
     public void deleteLight(@PathVariable String name) {
         log.info("Delete light {}", name);
 
-         service.delete(name);
+        service.delete(name);
     }
-
-
-
 }

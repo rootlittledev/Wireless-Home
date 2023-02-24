@@ -4,5 +4,11 @@
       "name": "scheduler.url",
       "type": "java.lang.String",
       "description": "URL to scheduler service."
-  }
-] }
+    },
+    {
+      "name": "connector.region",
+      "type": "java.lang.String",
+      "description": "Tuya IOT region."
+    }
+  ]
+}

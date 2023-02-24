@@ -17,7 +17,9 @@ import javax.persistence.Id;
 public class Light {
 
     @Id
+    private String id;
     private String name;
+
 
     private DeviceState state = DeviceState.OFF;
     private DeviceManufacturer manufacturer;
