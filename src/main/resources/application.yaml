@@ -16,3 +16,8 @@ connector:
   ak: ek8g7qjppmt34hapac3p
   sk: 77dbea5c45a54f03ae8be8a9ceaef8c9
   region: EU
+switch:
+  bot:
+    secret: 0dabc8bb05e1972fa217a3ea79d44dc2
+    token: 855747ae6b8e20d51ad978ff49270f954e2ffd81fb0e08d9f93ed98db76dae2224f102982a039e9a643646fde05d26fb
+    url: "https://api.switch-bot.com"

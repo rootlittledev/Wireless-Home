@@ -45,6 +45,10 @@ public final class CommandUtils {
         return new TuyaCommandRequest(commands);
     }
 
+    /*public static SwitchbotCommandRequest getThermostatCommands(Thermostat thermostat) {
+        return null;
+    }*/
+
     @NotNull
     private static TuyaColor getColor(LightColor lightColor) {
 
