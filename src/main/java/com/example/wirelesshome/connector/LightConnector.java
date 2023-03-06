@@ -1,5 +1,6 @@
 package com.example.wirelesshome.connector;
 
+import com.example.wirelesshome.connector.switchbot.SwitchBotConnector;
 import com.example.wirelesshome.connector.tuya.TuyaConnector;
 import com.example.wirelesshome.exception.DeviceNotSupported;
 import com.example.wirelesshome.model.device.DeviceManufacturer;
@@ -22,10 +23,12 @@ public class LightConnector {
     private final ModelMapper mapper;
 
     private final TuyaConnector tuyaConnector;
+    private final SwitchBotConnector switchBotConnector;
 
-    public LightConnector(ModelMapper mapper, @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") TuyaConnector tuyaConnector) {
+    public LightConnector(ModelMapper mapper, @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") TuyaConnector tuyaConnector, SwitchBotConnector switchBotConnector) {
         this.mapper = mapper;
         this.tuyaConnector = tuyaConnector;
+        this.switchBotConnector = switchBotConnector;
     }
 
     public LightStateRequest getDevice(Light light) {
@@ -60,6 +63,8 @@ public class LightConnector {
     private Connector getConnector(DeviceManufacturer manufacturer) {
         if (DeviceManufacturer.TUYA.equals(manufacturer)) {
             return tuyaConnector;
+        } else if (DeviceManufacturer.SWITCHBOT.equals(manufacturer)) {
+            return switchBotConnector;
         } else {
             throw new DeviceNotSupported();
         }

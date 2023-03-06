@@ -1,9 +1,14 @@
 package com.example.wirelesshome.util;
 
 import com.example.wirelesshome.exception.CommandNotFound;
+import com.example.wirelesshome.model.device.DeviceManufacturer;
 import com.example.wirelesshome.model.device.DeviceState;
 import com.example.wirelesshome.model.device.light.Light;
 import com.example.wirelesshome.model.device.light.LightColor;
+import com.example.wirelesshome.model.device.switchbot.SwitchbotCommand;
+import com.example.wirelesshome.model.device.switchbot.SwitchbotCommandRequest;
+import com.example.wirelesshome.model.device.switchbot.SwitchbotCommandType;
+import com.example.wirelesshome.model.device.thermostat.Thermostat;
 import com.example.wirelesshome.model.device.tuya.Command;
 import com.example.wirelesshome.model.device.tuya.TuyaColor;
 import com.example.wirelesshome.model.device.tuya.TuyaCommand;
@@ -20,9 +25,32 @@ public final class CommandUtils {
     }
 
 
-    public static TuyaCommandRequest getLightCommands(Light light) {
+    public static Object getLightCommands(Light light) {
 
+        if (DeviceManufacturer.TUYA.equals(light.getManufacturer())){
+            return getTuyaCommandRequest(light);
+        } else if (DeviceManufacturer.SWITCHBOT.equals(light.getManufacturer())) {
+            return getSwitchbotCommandRequest(light);
+        } else {
+            throw new CommandNotFound();
+        }
+    }
 
+    @NotNull
+    private static SwitchbotCommandRequest getSwitchbotCommandRequest(Light light) {
+        SwitchbotCommandRequest commandRequest = new SwitchbotCommandRequest();
+
+        SwitchbotCommand switchbotCommand = DeviceState.ON.equals(light.getState()) ? SwitchbotCommand.TURN_ON : SwitchbotCommand.TURN_OFF;
+
+        commandRequest.setCommandType(SwitchbotCommandType.COMMAND.getCommandType());
+        commandRequest.setCommand(switchbotCommand.getCommand());
+        commandRequest.setParameter("default");
+
+        return commandRequest;
+    }
+
+    @NotNull
+    private static TuyaCommandRequest getTuyaCommandRequest(Light light) {
         Command state = new Command(TuyaCommand.LIGHT.getCommand(), getCommandState(light));
         int value = Math.round(light.getBrightness() * 2.3f + 25f);
         Command brightness = new Command(TuyaCommand.BRIGHTNESS.getCommand(), value);
@@ -45,9 +73,14 @@ public final class CommandUtils {
         return new TuyaCommandRequest(commands);
     }
 
-    /*public static SwitchbotCommandRequest getThermostatCommands(Thermostat thermostat) {
-        return null;
-    }*/
+    public static SwitchbotCommandRequest getThermostatCommands(Thermostat thermostat) {
+        String command = thermostat.getDesiredTemperature() + "," +
+                thermostat.getMode().getMode() + "," +
+                thermostat.getFanSpeed().getSpeed() + "," +
+                thermostat.getState().name().toLowerCase();
+
+        return new SwitchbotCommandRequest(SwitchbotCommandType.COMMAND.getCommandType(), SwitchbotCommand.AC.getCommand(), command);
+    }
 
     @NotNull
     private static TuyaColor getColor(LightColor lightColor) {

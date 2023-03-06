@@ -2,6 +2,7 @@ package com.example.wirelesshome.controller;
 
 import com.example.wirelesshome.model.device.thermometer.Thermometer;
 import com.example.wirelesshome.model.device.thermostat.Thermostat;
+import com.example.wirelesshome.model.device.thermostat.ThermostatStateRequest;
 import com.example.wirelesshome.service.ThermometerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,5 +41,10 @@ public class TemperatureController {
 
         return service.getTemperature(deviceId);
 
+    }
+
+    @PutMapping("/{deviceId}")
+    Thermostat updateThermostat(@PathVariable String deviceId, @RequestBody ThermostatStateRequest request) {
+        return service.update(deviceId, request);
     }
 }

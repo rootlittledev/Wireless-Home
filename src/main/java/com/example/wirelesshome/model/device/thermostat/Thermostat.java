@@ -1,5 +1,6 @@
 package com.example.wirelesshome.model.device.thermostat;
 
+import com.example.wirelesshome.model.device.DeviceState;
 import com.example.wirelesshome.model.device.thermometer.Thermometer;
 import lombok.*;
 
@@ -24,6 +25,8 @@ public class Thermostat {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Thermometer thermometer;
+
+    private DeviceState state = DeviceState.OFF;
 
     private float desiredTemperature;
     private FanSpeed fanSpeed;

@@ -6,6 +6,8 @@ import com.example.wirelesshome.model.device.DeviceManufacturer;
 import com.example.wirelesshome.model.device.switchbot.SwitchbotThermometer;
 import com.example.wirelesshome.model.device.thermometer.Thermometer;
 import com.example.wirelesshome.model.device.thermometer.ThermometerStateRequest;
+import com.example.wirelesshome.model.device.thermostat.Thermostat;
+import com.example.wirelesshome.util.CommandUtils;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -52,13 +54,11 @@ public class TemperatureConnector {
         }
     }
 
-    /*public Boolean commands(Thermostat light) {
-     *//*Connector connector = getConnector(light.getManufacturer());
+    public Boolean commands(Thermostat thermostat) {
+     Connector connector = getConnector(thermostat.getThermometer().getManufacturer());
 
-        return connector.commands(light.getId(), CommandUtils.getThermostatCommands(light));*//*
-
-        return false;
-    }*/
+        return connector.commands(thermostat.getId(), CommandUtils.getThermostatCommands(thermostat));
+    }
 
 
 }

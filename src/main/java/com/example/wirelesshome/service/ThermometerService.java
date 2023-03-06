@@ -1,10 +1,12 @@
 package com.example.wirelesshome.service;
 
 import com.example.wirelesshome.connector.TemperatureConnector;
+import com.example.wirelesshome.exception.CommandFailed;
 import com.example.wirelesshome.exception.ThermostatNotFound;
 import com.example.wirelesshome.model.device.thermometer.Thermometer;
 import com.example.wirelesshome.model.device.thermometer.ThermometerStateRequest;
 import com.example.wirelesshome.model.device.thermostat.Thermostat;
+import com.example.wirelesshome.model.device.thermostat.ThermostatStateRequest;
 import com.example.wirelesshome.repository.ThermostatRepo;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +44,22 @@ public class ThermometerService {
 
     public Thermostat save(Thermostat thermostat) {
         return repo.save(thermostat);
+    }
+
+    public Thermostat update(String id, ThermostatStateRequest request) {
+
+        Thermostat thermostat = repo.findById(id).orElseThrow(ThermostatNotFound::new);
+
+        thermostat.setMode(request.getMode());
+        thermostat.setState(request.getState());
+        thermostat.setDesiredTemperature(request.getDesiredTemperature());
+        thermostat.setFanSpeed(request.getFanSpeed());
+
+
+        if (connector.commands(thermostat)) {
+            return repo.save(thermostat);
+        } else {
+            throw new CommandFailed();
+        }
     }
 }

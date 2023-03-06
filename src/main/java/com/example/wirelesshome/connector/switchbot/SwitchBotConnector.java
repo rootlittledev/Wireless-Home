@@ -45,25 +45,25 @@ public class SwitchBotConnector implements Connector {
 
     @PostConstruct
     private void init() {
-       log.info("Devices: {}", getDevices());
+        log.info("Devices: {}", getDevices());
     }
 
     @NotNull
     private Object getDevices() {
         String uri = "/v1.1/devices";
 
-        HttpEntity<Void> requestEntity = getHttpEntity();
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpEntity());
 
 
-        return send(uri, requestEntity, String.class);
+        return query(uri, requestEntity, String.class);
     }
 
     public Object getDevice(String deviceId) {
         String uri = "/v1.1/devices/" + deviceId + "/status";
 
-        HttpEntity<Void> requestEntity = getHttpEntity();
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpEntity());
 
-        SwitchBotStatus body = Optional.ofNullable(send(uri, requestEntity, SwitchBotStatus.class).getBody()).orElseThrow(DeviceStateMissing::new);
+        SwitchBotStatus body = Optional.ofNullable(query(uri, requestEntity, SwitchBotStatus.class).getBody()).orElseThrow(DeviceStateMissing::new);
 
         return mapper.map(body.getBody(), Thermometer.class);
     }
@@ -75,17 +75,27 @@ public class SwitchBotConnector implements Connector {
 
     @Override
     public Boolean commands(String deviceId, Object request) {
-        return null;
+
+        String uri = "/v1.1/devices/" + deviceId + "/commands";
+        HttpEntity<Object> requestEntity = new HttpEntity<>(request, getHttpEntity());
+        ResponseEntity<Object> response = send(uri, requestEntity);
+        return response.getBody() != null;
     }
 
     @NotNull
-    private <T> ResponseEntity<T> send(String uri, HttpEntity<Void> requestEntity, Class<T> type) {
+    private <T> ResponseEntity<T> query(String uri, HttpEntity<Void> requestEntity, Class<T> type) {
 
         return client.exchange(url + uri, HttpMethod.GET, requestEntity, type);
     }
 
     @NotNull
-    private HttpEntity<Void> getHttpEntity() {
+    private ResponseEntity<Object> send(String uri, HttpEntity<Object> requestEntity) {
+
+        return client.exchange(url + uri, HttpMethod.POST, requestEntity, Object.class);
+    }
+
+    @NotNull
+    private HttpHeaders getHttpEntity() {
         String nonce = UUID.randomUUID().toString();
         String time = "" + Instant.now().toEpochMilli();
         String data = token + time + nonce;
@@ -97,7 +107,8 @@ public class SwitchBotConnector implements Connector {
         headers.set("sign", signature);
         headers.set("nonce", nonce);
         headers.set("t", time);
+        headers.set("Content-Type", "application/json; charset=utf8");
 
-        return new HttpEntity<>(headers);
+        return headers;
     }
 }
