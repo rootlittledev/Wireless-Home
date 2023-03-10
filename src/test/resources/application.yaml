@@ -6,3 +6,17 @@ spring:
     password: password
 scheduler:
   url: "http://localhost:8070/"
+
+thermostat:
+  bound:
+    period: 60000
+
+connector:
+  ak: dummy
+  sk: dummy
+  region: EU
+switch:
+  bot:
+    secret: dummy
+    token: dummy
+    url: "https://dummy.com"

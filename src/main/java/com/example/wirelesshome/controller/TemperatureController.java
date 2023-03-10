@@ -1,6 +1,7 @@
 package com.example.wirelesshome.controller;
 
 import com.example.wirelesshome.model.device.thermometer.Thermometer;
+import com.example.wirelesshome.model.device.thermostat.BoundRequest;
 import com.example.wirelesshome.model.device.thermostat.Thermostat;
 import com.example.wirelesshome.model.device.thermostat.ThermostatStateRequest;
 import com.example.wirelesshome.service.ThermometerService;
@@ -46,5 +47,10 @@ public class TemperatureController {
     @PutMapping("/{deviceId}")
     Thermostat updateThermostat(@PathVariable String deviceId, @RequestBody ThermostatStateRequest request) {
         return service.update(deviceId, request);
+    }
+
+    @PutMapping("/bound")
+    Thermostat updateThermostatBound(@RequestBody BoundRequest request) {
+        return service.updateBound(request);
     }
 }

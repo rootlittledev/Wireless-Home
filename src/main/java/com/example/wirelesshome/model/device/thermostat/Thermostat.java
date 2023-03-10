@@ -29,6 +29,11 @@ public class Thermostat {
     private DeviceState state = DeviceState.OFF;
 
     private float desiredTemperature;
+
+    private float highBound = 0.0f;
+    private float lowBound = 0.0f;
+
+    private boolean isBound = false;
     private FanSpeed fanSpeed;
     private ThermostatMode mode;
 }

@@ -1,6 +1,6 @@
 logging:
   level:
-    com.example.wirelesshome: INFO
+    com.example.wirelesshome: DEBUG
 spring:
   datasource:
     url: "jdbc:postgresql://192.168.0.179:5432/device"
@@ -11,6 +11,10 @@ spring:
       ddl-auto: update
 scheduler:
   url: "http://localhost:8070/"
+
+thermostat:
+  bound:
+    period: 60000
 
 connector:
   ak: ek8g7qjppmt34hapac3p
